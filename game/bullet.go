@@ -12,35 +12,20 @@ const (
 )
 
 type Bullet struct {
-	sprite     *ebiten.Image
-	width      float64
-	height     float64
-	halfWidth  float64
-	halfHeight float64
-	position   Vector
-	rotation   float64
+	Object
+	position Vector
 }
 
 func NewBullet(position Vector, rotation float64) *Bullet {
-	sprite := assets.LaserSprite
+	object := NewObject(assets.LaserSprite)
+	object.rotation = rotation
 
-	bounds := sprite.Bounds()
-	width := float64(bounds.Dx())
-	height := float64(bounds.Dx())
-	halfWidth := width / 2
-	halfHeight := height / 2
-
-	position.X -= halfWidth
-	position.Y -= halfHeight
+	position.X -= object.halfWidth
+	position.Y -= object.halfHeight
 
 	return &Bullet{
-		sprite:     sprite,
-		width:      width,
-		height:     height,
-		halfWidth:  halfWidth,
-		halfHeight: halfHeight,
-		position:   position,
-		rotation:   rotation,
+		Object:   *object,
+		position: position,
 	}
 }
 

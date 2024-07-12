@@ -15,40 +15,25 @@ const (
 )
 
 type Player struct {
-	sprite     *ebiten.Image
-	position   Vector
-	width      float64
-	height     float64
-	halfWidth  float64
-	halfHeight float64
-	rotation   float64
+	Object
+	position Vector
 
 	shootCooldown *Timer
 	bullets       []*Bullet
 }
 
 func NewPlayer() *Player {
-	sprite := assets.PlayerSprite
-
-	bounds := sprite.Bounds()
-	width := float64(bounds.Dx())
-	halfWidth := width / 2
-	height := float64(bounds.Dy())
-	halfHeight := height / 2
+	object := NewObject(assets.PlayerSprite)
 
 	position := Vector{
-		X: screenWidth/2 - halfWidth,
-		Y: screenHeight/2 - halfHeight,
+		X: screenWidth/2 - object.halfWidth,
+		Y: screenHeight/2 - object.halfHeight,
 	}
 
 	return &Player{
-		sprite:        sprite,
-		position:      position,
-		width:         width,
-		height:        height,
-		halfWidth:     halfWidth,
-		halfHeight:    halfHeight,
-		rotation:      0,
+		Object:   *object,
+		position: position,
+
 		shootCooldown: NewTimer(shootCooldown),
 	}
 }
